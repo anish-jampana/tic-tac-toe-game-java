@@ -1,5 +1,7 @@
 package com.example;
 
+import sun.security.util.Cache;
+
 /**
  * Takes in and evaluates a string representing a tic tac toe board.
  */
@@ -48,11 +50,12 @@ public class TicTacToeBoard {
         if (Math.abs(numOfO - numOfX) <= 1) {
 
             Evaluation toReturn = Evaluation.NoWinner;
+
             // check if any columns in board result in a winner
             for (int i = 0; i < boardSideLength; i++) {
                 char letterAtPosition = specificBoard.toUpperCase().charAt(i);
-                char letterAtPosition1RowDown = specificBoard.toUpperCase().charAt(i + 3);
-                char letterAtPosition2RowDown = specificBoard.toUpperCase().charAt(i + 6);
+                char letterAtPosition1RowDown = specificBoard.toUpperCase().charAt(i + boardSideLength);
+                char letterAtPosition2RowDown = specificBoard.toUpperCase().charAt(i + ((boardSideLength - 1) * boardSideLength));
                 if (letterAtPosition == 'X') {
                     if (letterAtPosition == letterAtPosition1RowDown && letterAtPosition == letterAtPosition2RowDown) {
                         if (toReturn == Evaluation.Owins || toReturn == Evaluation.Xwins) {
@@ -72,8 +75,10 @@ public class TicTacToeBoard {
                 }
             }
 
+
+
             // check if any rows in board result in a winner
-            for (int i = 0; i < specificBoard.length(); i = i + 3) {
+            for (int i = 0; i < specificBoard.length(); i = i + boardSideLength) {
                 char letterAtPosition = specificBoard.toUpperCase().charAt(i);
                 char letterAtPosition1ColRight = specificBoard.toUpperCase().charAt(i + 1);
                 char letterAtPosition2ColRight = specificBoard.toUpperCase().charAt(i + 2);
@@ -95,6 +100,8 @@ public class TicTacToeBoard {
                     }
                 }
             }
+
+
 
             // check if any diagonals in board result in a winner
             int distanceToCenter = (boardSideLength * boardSideLength) / 2;
