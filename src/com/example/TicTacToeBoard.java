@@ -55,7 +55,7 @@ public class TicTacToeBoard {
                 char letterAtPosition2RowDown = specificBoard.toUpperCase().charAt(i + 6);
                 if (letterAtPosition == 'X') {
                     if (letterAtPosition == letterAtPosition1RowDown && letterAtPosition == letterAtPosition2RowDown) {
-                        if (toReturn == Evaluation.Owins) {
+                        if (toReturn == Evaluation.Owins || toReturn == Evaluation.Xwins) {
                             toReturn = Evaluation.UnreachableState;
                         } else {
                             toReturn = Evaluation.Xwins;
@@ -63,7 +63,7 @@ public class TicTacToeBoard {
                     }
                 } else if (letterAtPosition == 'O') {
                     if (letterAtPosition == letterAtPosition1RowDown && letterAtPosition == letterAtPosition2RowDown) {
-                        if (toReturn == Evaluation.Xwins) {
+                        if (toReturn == Evaluation.Owins || toReturn == Evaluation.Xwins) {
                             toReturn = Evaluation.UnreachableState;
                         } else {
                             toReturn = Evaluation.Owins;
@@ -79,7 +79,7 @@ public class TicTacToeBoard {
                 char letterAtPosition2ColRight = specificBoard.toUpperCase().charAt(i + 2);
                 if (letterAtPosition == 'X') {
                     if (letterAtPosition == letterAtPosition1ColRight && letterAtPosition == letterAtPosition2ColRight) {
-                        if (toReturn == Evaluation.Owins) {
+                        if (toReturn == Evaluation.Owins || toReturn == Evaluation.Xwins) {
                             toReturn = Evaluation.UnreachableState;
                         } else {
                             toReturn = Evaluation.Xwins;
@@ -87,7 +87,7 @@ public class TicTacToeBoard {
                     }
                 } else if (letterAtPosition == 'O') {
                     if (letterAtPosition == letterAtPosition1ColRight && letterAtPosition == letterAtPosition2ColRight) {
-                        if (toReturn == Evaluation.Xwins) {
+                        if (toReturn == Evaluation.Owins || toReturn == Evaluation.Xwins) {
                             toReturn = Evaluation.UnreachableState;
                         } else {
                             toReturn = Evaluation.Owins;
@@ -104,18 +104,25 @@ public class TicTacToeBoard {
                 char diagonalLastPosition = specificBoard.toUpperCase().charAt(i + (2 * distanceToCenter));
                 if (diagonalfirstPosition == 'X') {
                     if (diagonalfirstPosition == centerPosition && diagonalfirstPosition == diagonalLastPosition) {
-                        return Evaluation.Xwins;
+                        if (toReturn != Evaluation.UnreachableState) {
+                            toReturn = Evaluation.Xwins;
+                        }
                     }
                 } else if (diagonalfirstPosition == 'O') {
                     if (diagonalfirstPosition == centerPosition && diagonalfirstPosition == diagonalLastPosition) {
-                        return Evaluation.Owins;
+                        if (toReturn != Evaluation.UnreachableState) {
+                            toReturn = Evaluation.Owins;
+                        }
                     }
                 }
+
                 distanceToCenter--;
             }
 
             return toReturn;
+
+        } else {
+            return Evaluation.UnreachableState;
         }
-        return Evaluation.UnreachableState;
     }
 }

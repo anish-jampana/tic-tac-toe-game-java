@@ -31,14 +31,16 @@ public class TicTacToeBoardTest {
     assertEquals(Evaluation.UnreachableState, board1.evaluate());
     TicTacToeBoard board2 = new TicTacToeBoard("oXooxoOxO");
     assertEquals(Evaluation.UnreachableState, board2.evaluate());
+    TicTacToeBoard board3 = new TicTacToeBoard("xxxxooxoo");
+    assertEquals(Evaluation.UnreachableState, board3.evaluate());
   }
 
   @Test
   public void testValidBoardTwoWinnersUnreachableState() {
     TicTacToeBoard board = new TicTacToeBoard("xxxOOO...");
     assertEquals(Evaluation.UnreachableState, board.evaluate());
-    TicTacToeBoard board1 = new TicTacToeBoard("xO-Xo-xo-");
-    assertEquals(Evaluation.UnreachableState, board.evaluate());
+    TicTacToeBoard board1 = new TicTacToeBoard("xo-xo-xo-");
+    assertEquals(Evaluation.UnreachableState, board1.evaluate());
   }
 
   @Test
@@ -84,8 +86,10 @@ public class TicTacToeBoardTest {
   @Test
   public void testValidBoardOWinsDiagonal() {
     TicTacToeBoard board = new TicTacToeBoard("xxo.O.O.x");
-    //assertEquals(Evaluation.Owins, board.evaluate());
+    assertEquals(Evaluation.Owins, board.evaluate());
     TicTacToeBoard board1 = new TicTacToeBoard("oXOooxXxo");
     assertEquals(Evaluation.Owins, board1.evaluate());
   }
+
+
 }
