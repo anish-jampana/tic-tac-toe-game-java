@@ -49,7 +49,7 @@ public class TicTacToeBoard {
 
         if (Math.abs(numOfO - numOfX) <= 1) {
 
-            Evaluation toReturn = Evaluation.NoWinner;
+            Evaluation isWinner = Evaluation.NoWinner;
 
             // check if any columns in board result in a winner
             for (int i = 0; i < boardSideLength; i++) {
@@ -58,24 +58,22 @@ public class TicTacToeBoard {
                 char letterAtPosition2RowDown = specificBoard.toUpperCase().charAt(i + ((boardSideLength - 1) * boardSideLength));
                 if (letterAtPosition == 'X') {
                     if (letterAtPosition == letterAtPosition1RowDown && letterAtPosition == letterAtPosition2RowDown) {
-                        if (toReturn == Evaluation.Owins || toReturn == Evaluation.Xwins) {
-                            toReturn = Evaluation.UnreachableState;
+                        if (isWinner == Evaluation.Owins || isWinner == Evaluation.Xwins) {
+                            isWinner = Evaluation.UnreachableState;
                         } else {
-                            toReturn = Evaluation.Xwins;
+                            isWinner = Evaluation.Xwins;
                         }
                     }
                 } else if (letterAtPosition == 'O') {
                     if (letterAtPosition == letterAtPosition1RowDown && letterAtPosition == letterAtPosition2RowDown) {
-                        if (toReturn == Evaluation.Owins || toReturn == Evaluation.Xwins) {
-                            toReturn = Evaluation.UnreachableState;
+                        if (isWinner == Evaluation.Owins || isWinner == Evaluation.Xwins) {
+                            isWinner = Evaluation.UnreachableState;
                         } else {
-                            toReturn = Evaluation.Owins;
+                            isWinner = Evaluation.Owins;
                         }
                     }
                 }
             }
-
-
 
             // check if any rows in board result in a winner
             for (int i = 0; i < specificBoard.length(); i = i + boardSideLength) {
@@ -84,24 +82,22 @@ public class TicTacToeBoard {
                 char letterAtPosition2ColRight = specificBoard.toUpperCase().charAt(i + 2);
                 if (letterAtPosition == 'X') {
                     if (letterAtPosition == letterAtPosition1ColRight && letterAtPosition == letterAtPosition2ColRight) {
-                        if (toReturn == Evaluation.Owins || toReturn == Evaluation.Xwins) {
-                            toReturn = Evaluation.UnreachableState;
+                        if (isWinner == Evaluation.Owins || isWinner == Evaluation.Xwins) {
+                            isWinner = Evaluation.UnreachableState;
                         } else {
-                            toReturn = Evaluation.Xwins;
+                            isWinner = Evaluation.Xwins;
                         }
                     }
                 } else if (letterAtPosition == 'O') {
                     if (letterAtPosition == letterAtPosition1ColRight && letterAtPosition == letterAtPosition2ColRight) {
-                        if (toReturn == Evaluation.Owins || toReturn == Evaluation.Xwins) {
-                            toReturn = Evaluation.UnreachableState;
+                        if (isWinner == Evaluation.Owins || isWinner == Evaluation.Xwins) {
+                            isWinner = Evaluation.UnreachableState;
                         } else {
-                            toReturn = Evaluation.Owins;
+                            isWinner = Evaluation.Owins;
                         }
                     }
                 }
             }
-
-
 
             // check if any diagonals in board result in a winner
             int distanceToCenter = (boardSideLength * boardSideLength) / 2;
@@ -111,14 +107,14 @@ public class TicTacToeBoard {
                 char diagonalLastPosition = specificBoard.toUpperCase().charAt(i + (2 * distanceToCenter));
                 if (diagonalfirstPosition == 'X') {
                     if (diagonalfirstPosition == centerPosition && diagonalfirstPosition == diagonalLastPosition) {
-                        if (toReturn != Evaluation.UnreachableState) {
-                            toReturn = Evaluation.Xwins;
+                        if (isWinner != Evaluation.UnreachableState) {
+                            isWinner = Evaluation.Xwins;
                         }
                     }
                 } else if (diagonalfirstPosition == 'O') {
                     if (diagonalfirstPosition == centerPosition && diagonalfirstPosition == diagonalLastPosition) {
-                        if (toReturn != Evaluation.UnreachableState) {
-                            toReturn = Evaluation.Owins;
+                        if (isWinner != Evaluation.UnreachableState) {
+                            isWinner = Evaluation.Owins;
                         }
                     }
                 }
@@ -126,7 +122,7 @@ public class TicTacToeBoard {
                 distanceToCenter--;
             }
 
-            return toReturn;
+            return isWinner;
 
         } else {
             return Evaluation.UnreachableState;
