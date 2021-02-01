@@ -47,17 +47,20 @@ public class TicTacToeBoard {
             }
         }
 
+        //difference between turns in TicTacToe can't be more than 1
         if (Math.abs(numOfO - numOfX) <= 1) {
 
             Evaluation isWinner = Evaluation.NoWinner;
 
             // check if any columns in board result in a winner
-            for (int i = 0; i < boardSideLength; i++) {
-                char letterAtPosition = specificBoard.toUpperCase().charAt(i);
-                char letterAtPosition1RowDown = specificBoard.toUpperCase().charAt(i + boardSideLength);
-                char letterAtPosition2RowDown = specificBoard.toUpperCase().charAt(i + ((boardSideLength - 1) * boardSideLength));
+            for (int position = 0; position < boardSideLength; position++) {
+                char letterAtPosition = specificBoard.toUpperCase().charAt(position);
+                char letterAtPosition1RowDown = specificBoard.toUpperCase().charAt(position + boardSideLength);
+                char letterAtPosition2RowDown = specificBoard.toUpperCase().charAt(position + ((boardSideLength - 1) * boardSideLength));
                 if (letterAtPosition == 'X') {
                     if (letterAtPosition == letterAtPosition1RowDown && letterAtPosition == letterAtPosition2RowDown) {
+                        // if the board has Owins or Xwins in a different direction (horizontal),
+                        // unreachable state because game ends when one sequence of 3 is found
                         if (isWinner == Evaluation.Owins || isWinner == Evaluation.Xwins) {
                             isWinner = Evaluation.UnreachableState;
                         } else {
@@ -66,6 +69,8 @@ public class TicTacToeBoard {
                     }
                 } else if (letterAtPosition == 'O') {
                     if (letterAtPosition == letterAtPosition1RowDown && letterAtPosition == letterAtPosition2RowDown) {
+                        // if the board has Owins or Xwins in a different direction (horizontal),
+                        // unreachable state because game ends when one sequence of 3 is found
                         if (isWinner == Evaluation.Owins || isWinner == Evaluation.Xwins) {
                             isWinner = Evaluation.UnreachableState;
                         } else {
@@ -76,12 +81,14 @@ public class TicTacToeBoard {
             }
 
             // check if any rows in board result in a winner
-            for (int i = 0; i < specificBoard.length(); i = i + boardSideLength) {
-                char letterAtPosition = specificBoard.toUpperCase().charAt(i);
-                char letterAtPosition1ColRight = specificBoard.toUpperCase().charAt(i + 1);
-                char letterAtPosition2ColRight = specificBoard.toUpperCase().charAt(i + 2);
+            for (int position = 0; position < specificBoard.length(); position = position + boardSideLength) {
+                char letterAtPosition = specificBoard.toUpperCase().charAt(position);
+                char letterAtPosition1ColRight = specificBoard.toUpperCase().charAt(position + 1);
+                char letterAtPosition2ColRight = specificBoard.toUpperCase().charAt(position + 2);
                 if (letterAtPosition == 'X') {
                     if (letterAtPosition == letterAtPosition1ColRight && letterAtPosition == letterAtPosition2ColRight) {
+                        // if the board has Owins or Xwins in a different direction (vertical),
+                        // unreachable state because game ends when one sequence of 3 is found
                         if (isWinner == Evaluation.Owins || isWinner == Evaluation.Xwins) {
                             isWinner = Evaluation.UnreachableState;
                         } else {
@@ -90,6 +97,8 @@ public class TicTacToeBoard {
                     }
                 } else if (letterAtPosition == 'O') {
                     if (letterAtPosition == letterAtPosition1ColRight && letterAtPosition == letterAtPosition2ColRight) {
+                        // if the board has Owins or Xwins in a different direction (vertical),
+                        // unreachable state because game ends when one sequence of 3 is found
                         if (isWinner == Evaluation.Owins || isWinner == Evaluation.Xwins) {
                             isWinner = Evaluation.UnreachableState;
                         } else {
@@ -101,10 +110,10 @@ public class TicTacToeBoard {
 
             // check if any diagonals in board result in a winner
             int distanceToCenter = (boardSideLength * boardSideLength) / 2;
-            for (int i = 0; i < boardSideLength; i++) {
-                char diagonalfirstPosition = specificBoard.toUpperCase().charAt(i);
-                char centerPosition = specificBoard.toUpperCase().charAt(i + distanceToCenter);
-                char diagonalLastPosition = specificBoard.toUpperCase().charAt(i + (2 * distanceToCenter));
+            for (int position = 0; position < boardSideLength; position++) {
+                char diagonalfirstPosition = specificBoard.toUpperCase().charAt(position);
+                char centerPosition = specificBoard.toUpperCase().charAt(position + distanceToCenter);
+                char diagonalLastPosition = specificBoard.toUpperCase().charAt(position + (2 * distanceToCenter));
                 if (diagonalfirstPosition == 'X') {
                     if (diagonalfirstPosition == centerPosition && diagonalfirstPosition == diagonalLastPosition) {
                         if (isWinner != Evaluation.UnreachableState) {
