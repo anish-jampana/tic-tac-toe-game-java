@@ -28,7 +28,7 @@ public class TicTacToeBoardTest {
   }
 
   @Test
-  public void testValidBoardUnreachableStateSinglePlayer() {
+  public void testValidBoardUnreachableStateOnlyXOrO() {
     TicTacToeBoard board = new TicTacToeBoard("xXXXxxXxx");
     assertEquals(Evaluation.UnreachableState, board.evaluate());
     TicTacToeBoard board1 = new TicTacToeBoard("ooOooOoOO");
@@ -47,6 +47,12 @@ public class TicTacToeBoardTest {
     assertEquals(Evaluation.UnreachableState, board.evaluate());
     TicTacToeBoard board1 = new TicTacToeBoard("xo-xo-xo-");
     assertEquals(Evaluation.UnreachableState, board1.evaluate());
+  }
+
+  @Test
+  public void testValidBoardUnreachableStateDifferenceBetweenTurnsGreaterThan1 () {
+    TicTacToeBoard board = new TicTacToeBoard("XxXxxXooX");
+    assertEquals(Evaluation.UnreachableState, board.evaluate());
   }
 
   @Test
@@ -119,5 +125,18 @@ public class TicTacToeBoardTest {
   public void testValidBoardOWinsDiagonalComplete() {
     TicTacToeBoard board = new TicTacToeBoard("oXOooxXxo");
     assertEquals(Evaluation.Owins, board.evaluate());
+  }
+
+  @Test
+  public void testInvalidBoardThrowsIllegalArgumentException() {
+    boolean thrown = false;
+
+    try {
+      TicTacToeBoard board = new TicTacToeBoard("xxxxxxxxxxx");
+      board.evaluate();
+    } catch(IllegalArgumentException e) {
+      thrown = true;
+    }
+    assertEquals(true, thrown);
   }
 }
