@@ -1,5 +1,6 @@
 package com.example;
 
+import sun.awt.EventListenerAggregate;
 import sun.security.util.Cache;
 
 /**
@@ -39,15 +40,18 @@ public class TicTacToeBoard {
         int numOfX = 0;
         int numOfO = 0;
 
-        for (int i = 0; i < specificBoard.length(); i++) {
-            if (specificBoard.toUpperCase().charAt(i) == 'X') {
+        // counts the amount of Xs and Os in the board
+        for (int position = 0; position < specificBoard.length(); position++) {
+            if (specificBoard.toUpperCase().charAt(position) == 'X') {
                 numOfX++;
-            } else if (specificBoard.toUpperCase().charAt(i) == 'O') {
+            } else if (specificBoard.toUpperCase().charAt(position) == 'O') {
                 numOfO++;
             }
         }
 
-        //difference between turns in TicTacToe can't be more than 1
+        int distanceToCenter = (boardSideLength * boardSideLength) / 2;
+
+        // difference between turns in TicTacToe can't be more than 1
         if (Math.abs(numOfO - numOfX) <= 1) {
 
             Evaluation isWinner = Evaluation.NoWinner;
@@ -59,9 +63,8 @@ public class TicTacToeBoard {
                 char letterAtPosition2RowDown = specificBoard.toUpperCase().charAt(position + ((boardSideLength - 1) * boardSideLength));
                 if (letterAtPosition == 'X') {
                     if (letterAtPosition == letterAtPosition1RowDown && letterAtPosition == letterAtPosition2RowDown) {
-                        // if the board has Owins or Xwins in a different direction (horizontal),
-                        // unreachable state because game ends when one sequence of 3 is found
-                        if (isWinner == Evaluation.Owins || isWinner == Evaluation.Xwins) {
+                        // X and O can't win simultaneously and X can't win both vertically and horizontally if middle is not X
+                        if (isWinner == Evaluation.Owins || (isWinner == Evaluation.Xwins && specificBoard.toUpperCase().charAt(distanceToCenter) != 'X')) {
                             isWinner = Evaluation.UnreachableState;
                         } else {
                             isWinner = Evaluation.Xwins;
@@ -69,9 +72,8 @@ public class TicTacToeBoard {
                     }
                 } else if (letterAtPosition == 'O') {
                     if (letterAtPosition == letterAtPosition1RowDown && letterAtPosition == letterAtPosition2RowDown) {
-                        // if the board has Owins or Xwins in a different direction (horizontal),
-                        // unreachable state because game ends when one sequence of 3 is found
-                        if (isWinner == Evaluation.Owins || isWinner == Evaluation.Xwins) {
+                        // X and O can't win simultaneously and O can't win both vertically and horizontally if middle is not O
+                        if (isWinner == Evaluation.Xwins  || (isWinner == Evaluation.Owins && specificBoard.toUpperCase().charAt(distanceToCenter) != 'O')) {
                             isWinner = Evaluation.UnreachableState;
                         } else {
                             isWinner = Evaluation.Owins;
@@ -87,9 +89,8 @@ public class TicTacToeBoard {
                 char letterAtPosition2ColRight = specificBoard.toUpperCase().charAt(position + 2);
                 if (letterAtPosition == 'X') {
                     if (letterAtPosition == letterAtPosition1ColRight && letterAtPosition == letterAtPosition2ColRight) {
-                        // if the board has Owins or Xwins in a different direction (vertical),
-                        // unreachable state because game ends when one sequence of 3 is found
-                        if (isWinner == Evaluation.Owins || isWinner == Evaluation.Xwins) {
+                        // X and O can't win simultaneously and X can't win both vertically and horizontally if middle is not X
+                        if (isWinner == Evaluation.Owins || (isWinner == Evaluation.Xwins && specificBoard.toUpperCase().charAt(distanceToCenter) != 'X')) {
                             isWinner = Evaluation.UnreachableState;
                         } else {
                             isWinner = Evaluation.Xwins;
@@ -97,9 +98,8 @@ public class TicTacToeBoard {
                     }
                 } else if (letterAtPosition == 'O') {
                     if (letterAtPosition == letterAtPosition1ColRight && letterAtPosition == letterAtPosition2ColRight) {
-                        // if the board has Owins or Xwins in a different direction (vertical),
-                        // unreachable state because game ends when one sequence of 3 is found
-                        if (isWinner == Evaluation.Owins || isWinner == Evaluation.Xwins) {
+                        // X and O can't win simultaneously and O can't win both vertically and horizontally if middle is not O
+                        if (isWinner == Evaluation.Xwins  || (isWinner == Evaluation.Owins && specificBoard.toUpperCase().charAt(distanceToCenter) != 'O')) {
                             isWinner = Evaluation.UnreachableState;
                         } else {
                             isWinner = Evaluation.Owins;
@@ -109,7 +109,6 @@ public class TicTacToeBoard {
             }
 
             // check if any diagonals in board result in a winner
-            int distanceToCenter = (boardSideLength * boardSideLength) / 2;
             for (int position = 0; position < boardSideLength; position++) {
                 char diagonalfirstPosition = specificBoard.toUpperCase().charAt(position);
                 char centerPosition = specificBoard.toUpperCase().charAt(position + distanceToCenter);
@@ -127,7 +126,6 @@ public class TicTacToeBoard {
                         }
                     }
                 }
-
                 distanceToCenter--;
             }
 

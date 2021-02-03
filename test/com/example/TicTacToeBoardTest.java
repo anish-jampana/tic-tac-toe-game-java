@@ -140,6 +140,12 @@ public class TicTacToeBoardTest {
   }
 
   @Test
+  public void testValidBoardXWinsHorizontalAndVertical() {
+    TicTacToeBoard board = new TicTacToeBoard("oxoxxxoxo");
+    assertEquals(Evaluation.Xwins, board.evaluate());
+  }
+
+  @Test
   public void testInvalidBoardThrowsIllegalArgumentException() {
     boolean thrown = false;
 
